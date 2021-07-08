@@ -1,0 +1,28 @@
+<h1>List Users</h1>
+<table>
+    <tr>
+    <% for column in User.content_columns %>
+        <th><%= column.human_name %></th>
+    <% end %>
+    </tr>
+<% for user in @users %>
+    <tr>
+    <% for column in User.content_columns %>
+        <td><%=user.send(column.name) %></td>
+    <% end %>
+        <td><%= link_to 'Open', :action => :get, :id => user %></td>
+        <td><%= link_to 'Delete', { :action => :delete, :id => user }, method: :delete %></td>
+    </tr>
+<% end %>    
+</table>
+<%= link_to 'New User', :action => :new %>
+<% def rand_txt(base = 3, rnd = 10) %>
+    <% return (base + rand(rnd)).times.map{(:a..:z).to_a[rand(26)]}.join %>
+<% end %>
+<% def rand_email() %>
+    <% name = rand_txt %>
+    <% domain = rand_txt(3, 4) %>
+    <% tld = rand_txt %>
+    <% return "#{name}@#{domain}.#{tld}" %>
+<% end %>
+<%= link_to 'Rand User', { :action => :create, :user => { :first_name => rand_txt, :last_name => rand_txt, :email => rand_email }}, method: :post %>

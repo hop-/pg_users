@@ -1,0 +1,14 @@
+<h1>User</h1>
+<table>
+    <tr>
+    <% for column in User.content_columns %>
+        <th><%= column.human_name %></th>
+    <% end %>
+    </tr>
+    <tr>
+    <% for column in User.content_columns %>
+        <td><%=@user.send(column.name) %></td>
+    <% end %>
+    </tr>
+</table>
+<%= link_to 'List Users', :action => :list %>

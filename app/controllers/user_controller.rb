@@ -7,7 +7,10 @@ class UserController < ApplicationController
     end
     def create
         @user = User.new(user_params)
-        if @user.save
+        unless @user.save
+            flash[:alert] = 'Failed to create the user'
+            render 'new'
+        else
             flash[:notice] = 'User was successfully created'
             redirect_to :action => :list
         end
